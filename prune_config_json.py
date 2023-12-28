@@ -1,6 +1,8 @@
 import sys
 import json
 
+contains = ["apiKey", "path", "assistant"]
+
 
 def prune_config(file_path: str):
     """
@@ -11,7 +13,7 @@ def prune_config(file_path: str):
     with open(file_path, 'r') as f:
         config = json.load(f)
     for key in config:
-        if "apiKey" in key or "path" in key:
+        if any([c in key for c in contains]):
             config[key] = ""
     with open(file_path.replace(".json", ".sample.json"), 'w') as f:
         json.dump(config, f, indent=2, sort_keys=False, ensure_ascii=False)
