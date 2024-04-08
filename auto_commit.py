@@ -1,5 +1,6 @@
+#!/opt/homebrew/bin/python3.11
 import subprocess
-import sys
+import argparse
 
 
 def git_commit_push(commit_message, branch_name):
@@ -19,13 +20,19 @@ def git_commit_push(commit_message, branch_name):
 
 
 def main():
-    args = sys.argv[1:]
-    if len(args) == 0:
-        print("Please provide a commit message.")
-        return
-    commit_message = args[0]
-    branch_name = "master"
-    git_commit_push(commit_message, branch_name)
+    # Create the parser
+    parser = argparse.ArgumentParser(
+        description='Commit and push changes to a Git repository.')
+
+    # Add the arguments
+    parser.add_argument('commit_message', type=str, help='The commit message.')
+    parser.add_argument('-b', '--branch', type=str, default='master',
+                        help='The branch name to push to. Default is "master".')
+
+    # Parse the arguments
+    args = parser.parse_args()
+
+    git_commit_push(args.commit_message, args.branch)
 
 
 if __name__ == "__main__":
