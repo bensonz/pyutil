@@ -1,1 +1,0 @@
-python3 auto_commit.py $1
